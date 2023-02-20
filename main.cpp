@@ -6,24 +6,32 @@ using namespace sf;
 float offsetX = 0, offsetY = 0;
 
 
-const int H = 12;
-const int W = 40;
+const int H = 20;
+const int W = 45;
 
 
 String TileMap[H] = {
 
-"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
-"B                                B     B",
-"B                                B     B",
-"B                                B     B",
-"B                                B     B",
-"B         0000                BBBB     B",
-"B                                B     B",
-"BBB                              B     B",
-"B              BB                BB    B",
-"B              BB                      B",
-"B    B         BB         BB           B",
-"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+"B                                           B",
+"B      BBBB                                 B",
+"B                      BBBB       000       B",
+"B                                BBB        B",
+"B         0000                  BBB      BB B",
+"B          BB       BBBBBB        BBB       B",
+"BBB                           BBB       BBB B",
+"B              00                           B",
+"B                                           B",
+"B    B         BB           BBB             B",
+"B    B BBBBB          BB             BBB    B",
+"B    B         BB BB                        B",
+"B    B         BB             BBB           B",
+"B    B         BB                           B",
+"B    B         BBB                          B",
+"B    BB                  BB 000             B",
+"B                         BB00BBB           B",
+"B              BB         BBBBBBB           B",
+"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
 
 };
 
@@ -101,7 +109,7 @@ public:
 int main()
 {
 
-	RenderWindow window(VideoMode(600, 400), "Test!");
+	RenderWindow window(VideoMode(600, 400), "Test!"/*, Style::Fullscreen*/);
 
 	Texture tileSet;
 	tileSet.loadFromFile("Mario_Tileset.png");
