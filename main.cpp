@@ -42,7 +42,7 @@ public:
 
 	float dx, dy;
 	FloatRect rect;
-	bool onGround;
+	bool onGround; 
 	Sprite sprite;
 	float currentFrame;
 
@@ -81,7 +81,6 @@ public:
 	}
 
 
-
 	void Collision(int dir)
 	{
 		for (int i = rect.top / 32; i < (rect.top + rect.height) / 32; i++)
@@ -106,10 +105,73 @@ public:
 };
 
 
+class ENEMY
+	{
+	
+	public:
+		float dx, dy;
+		FloatRect rect;
+		Sprite sprite;
+		float currentFrame;
+		bool life;
+	
+	
+		void set(Texture& image, int x, int y)
+		{
+			sprite.setTexture(image);
+			rect = FloatRect(x, y, 16, 16);
+	
+			dx = 0.05;
+			currentFrame = 0;
+			life = true;
+		}
+	
+		void update(float time)
+		{
+			rect.left += dx * time;
+	
+			Collision();
+	
+	
+			currentFrame += time * 0.005;
+			if (currentFrame > 2) currentFrame -= 2;
+	
+			sprite.setTextureRect(IntRect(18 * int(currentFrame), 0, 16, 16));
+			if (!life) sprite.setTextureRect(IntRect(58, 0, 16, 16));
+	
+	
+			sprite.setPosition(rect.left - offsetX, rect.top - offsetY);
+	
+		}
+	
+	
+		void Collision()
+		{
+	
+			for (int i = rect.top / 16; i < (rect.top + rect.height) / 16; i++)
+				for (int j = rect.left / 16; j < (rect.left + rect.width) / 16; j++)
+					if ((TileMap[i][j] == 'P') || (TileMap[i][j] == '0'))
+					{
+						if (dx > 0)
+						{
+							rect.left = j * 16 - rect.width; dx *= -1;
+						}
+						else if (dx < 0)
+						{
+							rect.left = j * 16 + 16;  dx *= -1;
+						}
+	
+					}
+		}
+	
+	};
+
+
+
 int main()
 {
 
-	RenderWindow window(VideoMode(600, 400), "Test!"/*, Style::Fullscreen*/);
+	RenderWindow window(VideoMode(640, 480), "Test!"/*, Style::Fullscreen*/);
 
 	Texture tileSet;
 	tileSet.loadFromFile("Mario_Tileset.png");
@@ -145,18 +207,18 @@ int main()
 				window.close();
 		}
 
-		if (Keyboard::isKeyPressed(Keyboard::Left))
+		if (Keyboard::isKeyPressed(Keyboard::Left)|| Keyboard::isKeyPressed(Keyboard::A))
 		{
 			p.dx = -0.1;
 
 		}
 
-		if (Keyboard::isKeyPressed(Keyboard::Right))
+		if (Keyboard::isKeyPressed(Keyboard::Right) || Keyboard::isKeyPressed(Keyboard::D))
 		{
 			p.dx = 0.1;
 		}
 
-		if (Keyboard::isKeyPressed(Keyboard::Up))
+		if (Keyboard::isKeyPressed(Keyboard::Space))
 		{
 			if (p.onGround) { p.dy = -0.35; p.onGround = false; }
 		}
